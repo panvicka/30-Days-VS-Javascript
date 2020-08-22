@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -21,6 +23,26 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /*
+* definition of css variables
+* sacss - varible defined at compile time, css variables - changable in programm 
+*/
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,7 +67,32 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input'); // gives node list back for each can be used, not neccessary  to convert it to an array
+    //but there are some old old browsers without for each on node list  
+    console.log(inputs);
+
+
+    function handleUpdate() {
+      console.log(this.value);
+      const suffix = this.dataset.sizing || ''; //so i wont append undefined if the sizing data is not available (which is not for color etc)
+      
+      console.log(this.dataset);
+      console.log(suffix);
+      console.log(this.name); //this  shows me from where the change comes 
+
+      document.documentElement.style.setProperty(`--${this.name}`, this.value+suffix);
+
+    }
+
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+
   </script>
 
+  
+
 </body>
+
 </html>
