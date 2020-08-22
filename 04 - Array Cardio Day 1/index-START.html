@@ -116,17 +116,12 @@
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
 
     const trasportation = data.reduce((obj, item) => {
-
       console.log(item);
-
       if (!obj[item]) {
         obj[item] = 0;
       }
       obj[item]++;
       return obj;
-
-
-
     }, {
       // start with blank object 
     });
