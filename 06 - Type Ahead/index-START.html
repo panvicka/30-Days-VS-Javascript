@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <form class="search-form">
@@ -14,9 +16,68 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+    const searchInput = document.querySelector('.search');
+    console.log(searchInput);
+    const suggestions = document.querySelector('.suggestions');
+    console.log(suggestions);
+
+    const cities = [];
+    const prom = fetch(endpoint)
+      .then(blob => blob.json()) // convert to json returns promise as well 
+      .then(data => cities.push(...data));
+
+    //console.log(cities);
+
+
+    function findMatches(wordToMatch, cities) {
+
+      return cities.filter(place => {
+        // does the city/state matches??
+        // how to put variable into regular expression 
+        const regex = new RegExp(wordToMatch, 'gi'); // g - global, i - case insenstiive 
+        return place.city.match(regex) || place.state.match(regex);
+      })
+    }
+
+
+    function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+
+    function displayMatches() {
+      const matchArray = findMatches(this.value, cities);
+      console.log(matchArray);
+      const html = matchArray.map(place => {
+
+        const regex = new RegExp(this.value, 'gi');
+        const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+        const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+
+        //console.log(cityName);
+        return `
+          <li>
+            <span class="name"> ${cityName}, ${stateName} </span>
+            <span class="population"> ${numberWithCommas(place.population)} </span>
+          </li>
+          `
+      }).join(''); // array with multiple items into one big string 
+      suggestions.innerHTML = html;
+
+    }
+
+
+
+    searchInput.addEventListener('change', displayMatches);
+    searchInput.addEventListener('keyup', displayMatches);
+
+
+
+
+  </script>
 </body>
+
 </html>
