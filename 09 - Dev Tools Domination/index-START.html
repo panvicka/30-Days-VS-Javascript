@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
+
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
@@ -18,29 +20,68 @@
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    console.log('Hello %s', 'string');
 
     // Styled
+    console.log('%c styled console', 'font-size: 30px; background: red; text-shadow: 10px 10px 0 blue');
 
     // warning!
+    console.warn('OH NO');
 
     // Error :|
+    console.error('OH NO');
 
     // Info
+    console.info('infomato');
 
     // Testing
+    const p = document.querySelector('p');
+    console.assert(1 === 1, 'that is wrong');
+    console.assert(1 === 3, 'that is wrong');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+    console.clear();
 
     // Grouping together
+    dogs.forEach(element => {
+
+      // console.group(`${element.name}`);
+      console.groupCollapsed(`${element.name}`);
+
+      console.log(`This is ${element.name}`);
+      console.log(`${element.name} is old: ${element.age} `);
+      console.log(`${element.name} is old in dog years: ${element.age * 7} `);
+      console.groupEnd(`${element.name}`);
+
+    });
+
 
     // counting
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steeve');
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steeve');
 
     // timing
+    console.time('Fetch');
+    fetch('http://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('Fetch');
+        console.log(data);
+      });
 
   </script>
 </body>
+
 </html>
