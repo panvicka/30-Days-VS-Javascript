@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+
+const pressedAray =[];
+const secredCode = 'rendlik';
+window.addEventListener('keyup', (e) => {
+  console.log(e.key);
+  pressedAray.push(e.key);
+  pressedAray.splice(-secredCode.length -1, pressedAray.length - secredCode.length); // start from back, slice with minus index
+  console.log(pressedAray);
+  if (pressedAray.join('').includes(secredCode)) {
+    console.log('ding');
+    cornify_add();
+  }
+
+});
+
+
 </script>
 </body>
 </html>
