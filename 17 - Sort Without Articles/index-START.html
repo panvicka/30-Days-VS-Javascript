@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
+
 <body>
 
   <style>
@@ -26,12 +28,12 @@
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
-    
+
     #bands li {
       border-bottom: 1px solid #efefef;
       padding: 20px;
     }
-    
+
     #bands li:last-child {
       border-bottom: 0;
     }
@@ -40,16 +42,40 @@
       color: #ffc600;
       text-decoration: none;
     }
-
   </style>
 
   <ul id="bands"></ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  <script>
+    const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything',
+      'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+    function sortWithoutArticle(array) {
+      const list = document.querySelector('ul');
+ 
+      list.innerHTML = array.map(item => {
+        if (item.includes('The ')) item = item.replace('The ', '').concat(' The ');
+        if (item.includes('A ')) item = item.replace('A ', '').concat(' A ');
+        if (item.includes('An ')) item = item.replace('An ', '').concat(' An ');
+        return item;
+      }).sort().map(item => {
+        
+        if (item.includes('The ')) item = 'The '+ item.replace('The', '');
+        if (item.includes('A ')) item = 'A '+ item.replace('A', '');
+        if (item.includes('An ')) item = 'An ' + item.replace('An', '');
+   
+        return `
+        <li>${item}</li>
+        `;
+      }).join('');
+   
+    }
+
+    console.log(sortWithoutArticle(bands));
 
 
-</script>
+  </script>
 
 </body>
+
 </html>
